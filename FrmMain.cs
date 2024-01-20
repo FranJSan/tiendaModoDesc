@@ -371,12 +371,12 @@ namespace Tienda
             if (lbl.Text.Equals("↓ DataGridView ↓"))
             {
                 this.Size = new Size(1044, 663);
-                this.Location = new Point(Location.X, Location.Y - 173);
+                //this.Location = new Point(Location.X, Location.Y - 173);
                 LblDataGrid.Text = "↑ Ocultar ↑";
             } else
             {
                 this.Size = new Size(1044, 316);
-                this.Location = new Point(Location.X, Location.Y + 173);
+                //this.Location = new Point(Location.X, Location.Y + 173);
                 LblDataGrid.Text = "↓ DataGridView ↓";
             }            
         }
