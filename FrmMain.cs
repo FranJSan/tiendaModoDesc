@@ -13,20 +13,22 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Tarea 2.1 -> ACCESO EN MODO DESCONECTADO
 /// 
-/// El programa tiene la misma funcionalidad que el anterior, pero en Modo Desconectado.
+/// El programa tiene la misma funcionalidad que el anterior, pero en Modo Desconectado. 
+/// Además he agregado un DataGrid y unos CheckBoxs para porder configurar qué columnas visualizar y también tiene
+/// establecido un controlado para el evento doble_click igual al de los ListBox.
+/// 
 /// El programa comienza conectandose a la base de datos y cargando en un DataSet la tabla 'products' y 'categories',
 /// que serán las que se usarán durante la ejecución. Una vez cargado el dataSet, se cierra la conexión con la base
 /// de datos.
-/// Además he agregado un DataGrid y unos ChecksBox para porder configurar qué columnas visualizar y que también tiene
-/// establecido un controlado para el evento doble_click igual al de los ListBox.
 /// 
 /// Por lo demás, tiene la misma funcionalidad que la primera tarea:
-/// Se crea un RadioButton por categoria de de Products, asociandole un evento
-/// para mostrar todos los productos de esa categoría a las ListBox.
-/// Haciendo click sobre cualquier item de las ListBox se seleccionará el resto de información de ese producto.
-/// Haciendo doble click, se pasarán los datos de ese producto a los TextBox para actualizar.
+/// Se crea un RadioButton por categoria de Products, asociandole un evento para mostrar todos los productos de esa 
+/// categoría a las ListBox. Haciendo click sobre cualquier item de las ListBox se seleccionará el resto de información 
+/// de ese producto. Haciendo doble click, se pasarán los datos de ese producto a los TextBox para actualizar el registro.
 /// 
-/// La parte de actualización de datos comprueba la validez de los datos antes de lanzar el update a la base de datos.
+/// La parte de actualización de datos comprueba la validez de los mismos antes de actualizar los datos en el dataSet.
+/// 
+/// Por último, durante el evento Form_Closing, se abre la conexión y se pushean los cambios a la base de datos.
 /// </summary>
 namespace Tienda
 {
@@ -36,15 +38,14 @@ namespace Tienda
         private IDbCommand command;
 
         // Variables para Modo desc        
-        DataSet dataSet = new DataSet();        
-
+        DataSet dataSet = new DataSet();
         OleDbDataAdapter dataAdapterCat;
         OleDbDataAdapter dataAdapterProducts;
-
 
         public FrmMain()
         {
             InitializeComponent();
+            // Establezco el tamaño del Form para asegurarme de que el DataGrid queda oculto
             this.Size = new Size(1044, 316);
 
             LBProductId.Click += new EventHandler(LB_Click);
@@ -70,7 +71,8 @@ namespace Tienda
             CargarDatosProductsEnDataSet();
             CerrarConexion();
             CrearCategoriasModoDesc();
-            
+
+            // CheckBoxs para el DataGrid
             CrearCB();
         }
 
@@ -110,7 +112,6 @@ namespace Tienda
             OleDbCommandBuilder commandBuilder = new OleDbCommandBuilder(dataAdapterProducts);
             dataAdapterProducts.SelectCommand = (OleDbCommand)command;
             dataAdapterProducts.Fill(dataSet, "products");
-
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Tienda
 
         /// <summary>
         /// Método para crear los CheckBox que se usarán para configurar los campos que muestra el 
-        /// DataGrid. Después de crearlos se agregan al panel.
+        /// DataGrid. Después de crearlos se agregan al Panel.
         /// </summary>
         private void CrearCB()
         {
@@ -156,7 +157,7 @@ namespace Tienda
                 }
                 else cb.Checked = false;
 
-                cb.Location = new Point(0, 20 * i);
+                cb.Location = new Point(0, 25 * i);
                 PnlCB.Controls.Add(cb);
                 cb.CheckedChanged += new EventHandler(Chaged_Cheked_CB);
             }
@@ -204,8 +205,6 @@ namespace Tienda
         /// </summary>
         private void ConfigurarDataGrid()
         {
-
-            //foreach (DataGridViewColumn c in DGProducts.Columns)
             for (int i = 0; i < PnlCB.Controls.OfType<CheckBox>().Count(); i++)
             {
                 if (PnlCB.Controls.OfType<CheckBox>().ElementAt(i).Checked)
@@ -225,6 +224,9 @@ namespace Tienda
         /// <param name="e"></param>
         private void Chaged_Cheked_CB(object sender, EventArgs e)
         {
+            // Si no se ha establecido el DataSource del DataGrid, no actualizo sus columnas.
+            if (DGProducts.DataSource == null) return;
+            
             ConfigurarDataGrid();
         }
 
@@ -239,7 +241,6 @@ namespace Tienda
             rb.Text = categoria;
             rb.Top = ((rb.Height + 3) * (id - 1));
             rb.Tag = id;
-            //rb.CheckedChanged += new EventHandler(MostrarDatos);
             rb.CheckedChanged += new EventHandler(MostrarDatosModoDesc);
 
             PanelRb.Controls.Add(rb);
@@ -299,7 +300,9 @@ namespace Tienda
         /// </summary>
         /// <returns>true si los datos de entrada son válidos,
         /// false en caso contrario.</returns>
-        /// <remarks>Usa patrones Regex para comprobar la valided de los datos.</remarks>
+        /// <remarks>
+        /// Usa patrones Regex para comprobar la valided de los datos y avisa al usuario sobre los errores.
+        /// </remarks>
         private bool ComprobarTextBoxs()
         {
             
@@ -365,18 +368,16 @@ namespace Tienda
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <remarks>Establece un nuevo tamaño del Form para mostrar/ocultar en DataGrid</remarks>
-        private void label2_Click(object sender, EventArgs e)
+        private void LblDataGrid_Click(object sender, EventArgs e)
         {
             Label lbl = (Label)sender;
             if (lbl.Text.Equals("↓ DataGridView ↓"))
             {
                 this.Size = new Size(1044, 663);
-                //this.Location = new Point(Location.X, Location.Y - 173);
                 LblDataGrid.Text = "↑ Ocultar ↑";
             } else
             {
                 this.Size = new Size(1044, 316);
-                //this.Location = new Point(Location.X, Location.Y + 173);
                 LblDataGrid.Text = "↓ DataGridView ↓";
             }            
         }

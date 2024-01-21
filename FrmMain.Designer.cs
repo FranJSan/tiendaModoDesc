@@ -54,10 +54,10 @@ namespace Tienda
             this.BtnBorrarConsultas = new System.Windows.Forms.Button();
             this.BtnBorrarInputs = new System.Windows.Forms.Button();
             this.PanelInput = new System.Windows.Forms.Panel();
+            this.PnlCB = new System.Windows.Forms.Panel();
+            this.LblConfigDG = new System.Windows.Forms.Label();
             this.DGProducts = new System.Windows.Forms.DataGridView();
             this.LblDataGrid = new System.Windows.Forms.Label();
-            this.LblConfigDG = new System.Windows.Forms.Label();
-            this.PnlCB = new System.Windows.Forms.Panel();
             this.PanelInput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGProducts)).BeginInit();
             this.SuspendLayout();
@@ -252,7 +252,7 @@ namespace Tienda
             this.PanelRb.Location = new System.Drawing.Point(18, 38);
             this.PanelRb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PanelRb.Name = "PanelRb";
-            this.PanelRb.Size = new System.Drawing.Size(131, 240);
+            this.PanelRb.Size = new System.Drawing.Size(131, 225);
             this.PanelRb.TabIndex = 17;
             // 
             // Lblcategorias
@@ -318,6 +318,24 @@ namespace Tienda
             this.PanelInput.Size = new System.Drawing.Size(370, 634);
             this.PanelInput.TabIndex = 22;
             // 
+            // PnlCB
+            // 
+            this.PnlCB.Location = new System.Drawing.Point(67, 338);
+            this.PnlCB.Name = "PnlCB";
+            this.PnlCB.Size = new System.Drawing.Size(258, 274);
+            this.PnlCB.TabIndex = 22;
+            // 
+            // LblConfigDG
+            // 
+            this.LblConfigDG.AutoSize = true;
+            this.LblConfigDG.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblConfigDG.Location = new System.Drawing.Point(63, 298);
+            this.LblConfigDG.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LblConfigDG.Name = "LblConfigDG";
+            this.LblConfigDG.Size = new System.Drawing.Size(262, 24);
+            this.LblConfigDG.TabIndex = 21;
+            this.LblConfigDG.Text = "Configura el DataGrid";
+            // 
             // DGProducts
             // 
             this.DGProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
@@ -349,25 +367,7 @@ namespace Tienda
             this.LblDataGrid.TabIndex = 24;
             this.LblDataGrid.Text = "↓ DataGridView ↓";
             this.LblDataGrid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.LblDataGrid.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // LblConfigDG
-            // 
-            this.LblConfigDG.AutoSize = true;
-            this.LblConfigDG.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblConfigDG.Location = new System.Drawing.Point(63, 298);
-            this.LblConfigDG.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LblConfigDG.Name = "LblConfigDG";
-            this.LblConfigDG.Size = new System.Drawing.Size(262, 24);
-            this.LblConfigDG.TabIndex = 21;
-            this.LblConfigDG.Text = "Configura el DataGrid";
-            // 
-            // PnlCB
-            // 
-            this.PnlCB.Location = new System.Drawing.Point(67, 338);
-            this.PnlCB.Name = "PnlCB";
-            this.PnlCB.Size = new System.Drawing.Size(258, 274);
-            this.PnlCB.TabIndex = 22;
+            this.LblDataGrid.Click += new System.EventHandler(this.LblDataGrid_Click);
             // 
             // FrmMain
             // 
